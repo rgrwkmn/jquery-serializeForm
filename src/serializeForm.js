@@ -6,16 +6,31 @@
  * Licensed under the MIT, GPL licenses.
  */
 (function( $ ){
-  $.fn.serializeForm = function() {
+  $.fn.serializeForm = function(options) {
 
     // don't do anything if we didn't get any elements
-    if ( this.length < 1) { 
-      return false; 
+    if ( this.length < 1) {
+      return false;
     }
 
     var data = {};
     var lookup = data; //current reference of data
     var selector = ':input[type!="checkbox"][type!="radio"], input:checked';
+    if (options.checkboxBoolean) {
+        selector = ':input';
+    }
+
+    var getVal = function($el) {
+        if (options.checkboxBoolean && $el.is(':checkbox')) {
+            if (options.checkboxBoolean === Number) {
+                return ($el.is(':checked')) ? 1 : 0;
+            } else {
+                return $el.is(':checked');
+            }
+        }
+
+        return $el.val();
+    };
     var parse = function() {
 
       // data[a][b] becomes [ data, a, b ]
@@ -33,9 +48,9 @@
 
         // at the end, push or assign the value
         if ( lookup.length !==  undefined ) {
-          lookup.push( $el.val() );
-        }else {
-          lookup[ named[ cap ] ]  = $el.val();
+          lookup.push( getVal($el) );
+        } else {
+          lookup[ named[ cap ] ]  = getVal($el);
         }
 
         // assign the reference back to root
