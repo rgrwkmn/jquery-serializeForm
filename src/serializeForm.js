@@ -17,7 +17,7 @@
     var lookup = data; //current reference of data
     var selector = ':input[type!="checkbox"][type!="radio"], input:checked';
     if (options.checkboxBoolean) {
-        selector = ':input';
+        selector = ':input[type!="radio"], input[type=radio]:checked';
     }
 
     var getVal = function($el) {
