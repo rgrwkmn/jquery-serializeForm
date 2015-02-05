@@ -45,6 +45,89 @@ Returns
 }
 ```
 
+###checkboxBoolean option
+
+Checkboxes are often used for boolean values such as toggling options on and off. In these cases, you want all of that data sent to the server, including checkboxes that aren't checked. By default this is not how standard HTML forms work, [here is a good explanation of their intended behavior](http://stackoverflow.com/questions/2770209/checkbox-off-value-without-javascript).
+
+Either your back end knows exactly what is supposed to be in the form data and handles missing values as `false` or you can use two radio buttons for every boolean value you want in the form. The former limits your flexibility and the latter is usually worse UI plus it will send text values that you have to parse into booleans.
+
+With the `checkboxBoolean` option, you can return all checkbox values as either the numbers `1` or `0` or the booleans `true` or `false`.
+
+Example:
+
+```html
+<div id="test">
+  <input name="text1" value="txt-one" />
+  <input type="checkbox" name="top[child][]" checked="checked" />
+  <input type="checkbox" name="top[child][]" checked="checked" />
+  <input type="checkbox" name="top[child][]" />
+</div>
+```
+
+
+```javascript
+$( '#test' ).serializeForm({
+    checkboxBoolean: true
+});
+```
+
+Returns
+
+```javascript
+{ text1: "txt-one",
+  top: {
+    child: [ true, true, false ]
+  }
+}
+```
+
+Or with numbers:
+
+```javascript
+$( '#test' ).serializeForm({
+    checkboxBoolean: 1
+});
+```
+
+Returns
+
+```javascript
+{ text1: "txt-one",
+  top: {
+    child: [ 1, 1, 0 ]
+  }
+}
+```
+
+If you set a value on a checkbox, it will function like a normal checkbox and return that value if it is checked:
+
+```html
+<div id="test">
+  <input name="text1" value="txt-one" />
+  <input type="checkbox" name="top[child][]" value="hello" checked="checked" />
+  <input type="checkbox" name="top[child][]" value="hello again" /> <!-- not checked -->
+  <input type="checkbox" name="top[child][]" checked="checked" />
+  <input type="checkbox" name="top[child][]" />
+</div>
+```
+
+
+```javascript
+$( '#test' ).serializeForm({
+    checkboxBoolean: true
+});
+```
+
+Returns
+
+```javascript
+{ text1: "txt-one",
+  top: {
+    child: [ 'hello', true, false ]
+  }
+}
+```
+
 ## Release History
 
 1.1.3 Fix multiwork keyword in jquery manifest file
@@ -54,7 +137,7 @@ Returns
 1.0.0 Actual release while moving to grunt and adding licensing information
 
 ## License
-Copyright (c) 2012 Dan Heberden  
+Copyright (c) 2012 Dan Heberden
 Licensed under the MIT, GPL licenses.
 
 ### Important notes

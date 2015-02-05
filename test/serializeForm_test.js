@@ -124,5 +124,35 @@
 
     deepEqual( result, looksLike, "Ignored disabled element" );
   });
+  test("Use checkboxBoolean with numbers", function() {
+    expect(1);
+
+    var looksLike = {
+      one: 1,
+      two: 'hello',
+      three: 0,
+      four: 'hello'
+    };
+    var result = $( "#test-form-checkboxBoolean" ).serializeForm({
+      checkboxBoolean: 1
+    });
+
+    deepEqual( result, looksLike, "Got correct number values" );
+  });
+  test("Use checkboxBoolean with numbers", function() {
+    expect(1);
+
+    var looksLike = {
+      one: true,
+      two: 'hello',
+      three: false,
+      four: 'hello'
+    };
+    var result = $( "#test-form-checkboxBoolean" ).serializeForm({
+      checkboxBoolean: true
+    });
+
+    deepEqual( result, looksLike, "Got correct boolean values" );
+  });
 
 }(jQuery));

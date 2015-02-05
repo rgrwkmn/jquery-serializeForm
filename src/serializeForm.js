@@ -16,15 +16,21 @@
     var data = {};
     var lookup = data; //current reference of data
     var selector = ':input[type!="checkbox"][type!="radio"], input:checked';
-    if (options.checkboxBoolean) {
+    var checkboxBoolean = null;
+    if (options && options.checkboxBoolean) {
         selector = ':input[type!="radio"], input[type=radio]:checked';
+        // checkboxBoolean can be 1 or true
+        checkboxBoolean = options.checkboxBoolean;
     }
 
     var getVal = function($el) {
-        if (options.checkboxBoolean && $el.is(':checkbox')) {
-            if (options.checkboxBoolean === Number) {
+        // the value will only match 'on' if there is no value set on the checkbox
+        // however I feel like I've seen an 'off' value before when not checked
+        // so I'm checking for that as well out of paranoia
+        if (checkboxBoolean && $el.val().match(/^(on|off)$/)) {
+            if (checkboxBoolean === 1) {
                 return ($el.is(':checked')) ? 1 : 0;
-            } else {
+            } else if (checkboxBoolean === true) {
                 return $el.is(':checked');
             }
         }
