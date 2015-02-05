@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
   <script src="../libs/qunit/qunit.js"></script>
   <!-- Load local lib and tests. -->
-  <script src="../src/serializeObject.js"></script>
-  <script src="serializeObject_test.js"></script>
+  <script src="../src/serializeForm.js"></script>
+  <script src="serializeForm_test.js"></script>
   <!-- Removing access to jQuery and $. But it'll still be available as _$, if
        you REALLY want to mess around with jQuery in the console. REMEMBER WE
        ARE TESTING YOUR PLUGIN HERE -->
@@ -44,6 +44,26 @@
       <input type="checkbox" name="top[child][]" value="2" checked="checked" />
       <input type="checkbox" name="top[child][]" value="3" checked="checked" />
     </div>
+    <form id="test-form-disabled">
+      <input name="text1" value="txt-one" />
+      <input type="checkbox" name="top[child][]" value="1" checked="checked" />
+      <input type="checkbox" name="top[child][]" value="2" checked="checked" />
+      <input type="checkbox" name="top[child][]" value="3" checked="checked" />
+      <input type="text" name="text2" disabled value="txt-two" />
+    </form>
+    <form id="test-form-array-index">
+      <input name="text[0]" value="0-text" />
+      <input name="text[1]" value="1-text" />
+    </form>
+    <form id="test-form-object-in-array">
+      <input name="block[0][people][first_name]" value="0-first" />
+      <input name="block[0][people][last_name]" value="0-last" />
+      <input name="block[0][room]" value="0-room" />
+
+      <input name="block[1][people][first_name]" value="1-first" />
+      <input name="block[1][people][last_name]" value="1-last" />
+      <input name="block[1][room]" value="1-room" />
+    </form>
   </div>
 </body>
 </html>

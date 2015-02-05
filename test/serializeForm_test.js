@@ -22,7 +22,7 @@
       raises(block, [expected], [message])
   */
 
-  module('SerializeObject', {
+  module('SerializeForm', {
     setup: function() {
       this.elems = $('#qunit-fixture').children();
     }
@@ -68,10 +68,61 @@
       }
     };
 
-    deepEqual( result, looksLike, "jQuery.fn.serizlieObject() correctly generates object based on elements in the jQuery collection" );
+    deepEqual( result, looksLike, "jQuery.fn.serializeForm() correctly generates object based on elements in the jQuery collection" );
+  });
+
+  test( 'Treat items with a provided array index as an actual array', function() {
+    expect(1);
+
+    var result = $( '#test-form-array-index' ).serializeForm();
+    var looksLike = {
+      text: [
+        "0-text",
+        "1-text"
+      ]
+    };
+
+    deepEqual( result, looksLike, "Provided array index made into an array" );
   });
 
 
+  test( 'Provided array index works with nested objects', function() {
+    expect(1);
 
+    var result = $( '#test-form-object-in-array' ).serializeForm();
+    var looksLike = {
+      block: [
+        {
+          people: {
+            first_name: '0-first',
+            last_name: '0-last'
+          },
+          room: '0-room'
+        },
+        {
+          people: {
+            first_name: '1-first',
+            last_name: '1-last'
+          },
+          room: '1-room'
+        }
+      ]
+    };
+
+    deepEqual( result, looksLike, "Provided array index made into an array" );
+  });
+  test("Ignore disabled elements", function() {
+    expect(1);
+
+    var looksLike = {
+      text1: "txt-one",
+      top: {
+        child: [ "1", "2", "3" ]
+      }
+    };
+    var result = $( "#test-form-disabled" ).serializeForm();
+
+    deepEqual( result, looksLike, "Ignored disabled element" );
+  });
 
 }(jQuery));
