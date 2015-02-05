@@ -1,6 +1,6 @@
 # serializeForm
 
-Make an object out of form elements
+Make an object out of form elements. This fork adds the `checkboxBoolean` option described below.
 
 ## Getting Started
 Download the [production version][min] or the [development version][max].
@@ -57,7 +57,6 @@ Example:
 
 ```html
 <div id="test">
-  <input name="text1" value="txt-one" />
   <input type="checkbox" name="top[child][]" checked="checked" />
   <input type="checkbox" name="top[child][]" checked="checked" />
   <input type="checkbox" name="top[child][]" />
@@ -74,7 +73,7 @@ $( '#test' ).serializeForm({
 Returns
 
 ```javascript
-{ text1: "txt-one",
+{
   top: {
     child: [ true, true, false ]
   }
@@ -92,7 +91,7 @@ $( '#test' ).serializeForm({
 Returns
 
 ```javascript
-{ text1: "txt-one",
+{
   top: {
     child: [ 1, 1, 0 ]
   }
@@ -103,7 +102,6 @@ If you set a value on a checkbox, it will function like a normal checkbox and re
 
 ```html
 <div id="test">
-  <input name="text1" value="txt-one" />
   <input type="checkbox" name="top[child][]" value="hello" checked="checked" />
   <input type="checkbox" name="top[child][]" value="hello again" /> <!-- not checked -->
   <input type="checkbox" name="top[child][]" checked="checked" />
@@ -121,7 +119,7 @@ $( '#test' ).serializeForm({
 Returns
 
 ```javascript
-{ text1: "txt-one",
+{
   top: {
     child: [ 'hello', true, false ]
   }
