@@ -51,7 +51,7 @@ Checkboxes are often used for boolean values such as toggling options on and off
 
 Either your back end knows exactly what is supposed to be in the form data and handles missing values as `false` or you can use two radio buttons for every boolean value you want in the form. The former limits your flexibility and the latter is usually worse UI plus it will send text values that you have to parse into booleans.
 
-With the `checkboxBoolean` option, you can return all checkbox values as either the numbers `1` or `0` or the booleans `true` or `false`.
+With the `checkboxBoolean` option, you can return all checkbox values as either the numbers `1` or `0`, or the booleans `true` or `false`.
 
 Example:
 
